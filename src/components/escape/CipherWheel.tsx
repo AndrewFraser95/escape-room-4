@@ -3,8 +3,26 @@ import { useGame } from "./GameContext";
 import { motion } from "framer-motion";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const ANSWER = "SPRING";
+const ANSWER = "TRICKY";
 const RING_COUNT = 6; // one ring per letter
+
+// Function to generate 6 random letters with one being the correct answer
+const generateRingLetters = (correctLetter: string): string[] => {
+  const letters = [correctLetter];
+  while (letters.length < 6) {
+    const randomLetter = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+    if (!letters.includes(randomLetter)) {
+      letters.push(randomLetter);
+    }
+  }
+  // Shuffle the array
+  return letters.sort(() => Math.random() - 0.5);
+};
+
+// Pre-generate the ring letter sets
+const RING_LETTERS = ANSWER.split("").map((letter) =>
+  generateRingLetters(letter)
+);
 
 const CipherWheel: React.FC = () => {
   const { solveChallenge, solvedChallenges } = useGame();
@@ -15,12 +33,12 @@ const CipherWheel: React.FC = () => {
     if (solved) return;
     setRotations((prev) => {
       const next = [...prev];
-      next[ringIndex] = (next[ringIndex] + direction + 26) % 26;
+      next[ringIndex] = (next[ringIndex] + direction + 6) % 6;
       return next;
     });
   };
 
-  const currentLetters = rotations.map((r) => ALPHABET[r]);
+  const currentLetters = rotations.map((r, i) => RING_LETTERS[i][r]);
   const currentWord = currentLetters.join("");
 
   React.useEffect(() => {
@@ -41,8 +59,7 @@ const CipherWheel: React.FC = () => {
           The Cipher Rings
         </h2>
         <p className="text-muted-foreground font-body">
-          Six rings, each bearing the alphabet. Rotate them to spell the season 
-          when new life begins. <span className="text-accent font-medium">Hint: What follows winter?</span>
+          Six rings, each bearing six letters. Rotate them to find the mystery word.
         </p>
       </div>
 
@@ -60,7 +77,7 @@ const CipherWheel: React.FC = () => {
               <div className={`w-14 h-14 rounded-lg flex items-center justify-center text-2xl font-display font-bold ${
                 solved ? "bg-primary text-primary-foreground" : ringColors[i] + " text-foreground"
               } transition-all duration-300 shadow-md`}>
-                {ALPHABET[rot]}
+                {RING_LETTERS[i][rot]}
               </div>
               <button
                 onClick={() => rotate(i, 1)}
@@ -80,7 +97,7 @@ const CipherWheel: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-primary font-display text-xl font-semibold"
         >
-          🌸 The cipher unlocks: SPRING!
+          � The cipher unlocks: TRICKY!
         </motion.div>
       )}
     </div>

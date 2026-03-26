@@ -2,17 +2,21 @@ import React, { useState, useRef } from "react";
 import { useGame } from "./GameContext";
 import { motion } from "framer-motion";
 
-// 4x4 grid of dots, connect in egg shape pattern
-const GRID_SIZE = 4;
-const DOT_SPACING = 70;
-const DOT_RADIUS = 12;
+// 5x5 grid of dots, connect in right-facing Pac-Man shape pattern
+const GRID_SIZE = 5;
+const DOT_SPACING = 60;
+const DOT_RADIUS = 10;
 
-// The correct path forms an egg shape (indices in 4x4 grid, 0-15)
-// Grid:  0  1  2  3
-//        4  5  6  7
-//        8  9 10 11
-//       12 13 14 15
-const CORRECT_PATH = [1, 2, 7, 11, 14, 13, 12, 8, 4, 1]; // egg outline
+// The correct path forms a Pac-Man shape facing right (indices in 5x5 grid, 0-24)
+// Grid:  0  1  2  3  4
+//        5  6  7  8  9
+//       10 11 12 13 14
+//       15 16 17 18 19
+//       20 21 22 23 24
+const CORRECT_PATH = [1, 2, 3, 9, 13, 19, 23, 22, 21, 15, 10, 5, 1]; // pac-man outline
+
+// // Pre-filled dots to give user a hint of the pattern (mouth opening points)
+// const HINT_DOTS = [3, 8, 13, 18];
 
 const PatternConnect: React.FC = () => {
   const { solveChallenge, solvedChallenges } = useGame();
@@ -42,9 +46,11 @@ const PatternConnect: React.FC = () => {
       if (path.includes(index) && index === path[0] && path.length > 2) {
         // Closing the path
         const fullPath = [...path, index];
+        setPath(fullPath);
         checkSolution(fullPath);
         setDrawing(false);
       } else if (!path.includes(index)) {
+        // Add new dot to path
         setPath([...path, index]);
       }
     }
@@ -96,9 +102,8 @@ const PatternConnect: React.FC = () => {
           The Dotted Path
         </h2>
         <p className="text-muted-foreground font-body">
-          Connect the dots to trace the outline of an Easter symbol. 
+          Connect the dots to trace a classic arcade icon. Watch out for Blinky, Pinky, Inky, and Clyde! 
           Click dots to draw, then click your starting dot to close the shape.
-          <span className="text-accent font-medium"> Hint: Think oval.</span>
         </p>
       </div>
 
@@ -109,6 +114,7 @@ const PatternConnect: React.FC = () => {
           height={height}
           className="select-none"
         >
+
           {/* Draw lines */}
           {path.length > 1 && path.map((_, i) => {
             if (i === 0) return null;
@@ -145,11 +151,12 @@ const PatternConnect: React.FC = () => {
                       ? "hsl(150, 25%, 35%)"
                       : isInPath
                       ? "hsl(38, 60%, 62%)"
-                      : "hsl(40, 20%, 85%)"
+                      : "hsl(36, 39%, 3%)"
                   }
                   stroke={isStart && drawing ? "hsl(12, 55%, 62%)" : "transparent"}
                   strokeWidth={isStart && drawing ? 3 : 0}
                   className="transition-colors duration-200"
+                  opacity={!isInPath ? 0.4 : 1}
                 />
                 {isStart && drawing && (
                   <circle
@@ -186,7 +193,7 @@ const PatternConnect: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-primary font-display text-xl font-semibold"
         >
-          🥚 The egg takes shape!
+          Ⓟ Waka waka! You won!
         </motion.div>
       )}
     </div>
