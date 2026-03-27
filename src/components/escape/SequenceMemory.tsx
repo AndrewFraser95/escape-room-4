@@ -3,13 +3,13 @@ import { useGame } from "./GameContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 const EGGS = [
-  { id: 0, emoji: "🌷", label: "Tulip", color: "bg-spring-coral" },
+  { id: 0, emoji: "�", label: "Cherry", color: "bg-spring-coral" },
   { id: 1, emoji: "🐣", label: "Chick", color: "bg-spring-honey" },
-  { id: 2, emoji: "🌿", label: "Leaf", color: "bg-spring-sage" },
+  { id: 2, emoji: "🐝", label: "Bee", color: "bg-spring-sage" },
   { id: 3, emoji: "🦋", label: "Butterfly", color: "bg-spring-mint" },
 ];
 
-const SEQUENCE_LENGTH = 5;
+const SEQUENCE_LENGTH = 8;
 
 const SequenceMemory: React.FC = () => {
   const { solveChallenge, solvedChallenges } = useGame();
@@ -68,6 +68,10 @@ const SequenceMemory: React.FC = () => {
     // Flash the egg
     setHighlightedEgg(eggId);
     setTimeout(() => setHighlightedEgg(null), 200);
+
+    // Make a note on each press
+    const eggLabel = EGGS.find(e => e.id === eggId)?.label || "note";
+    console.log(`📝 Selected: ${eggLabel}`);
 
     const newInput = [...playerInput, eggId];
     setPlayerInput(newInput);

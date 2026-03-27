@@ -71,12 +71,18 @@ const GameInner: React.FC = () => {
           <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
             Vault Unlocked!
           </h1>
-          <p className="text-muted-foreground font-body text-lg mb-2">
+          <p className="text-muted-foreground font-body text-lg mb-4">
             You solved all four challenges in
           </p>
-          <p className="font-display text-3xl font-bold text-primary mb-8">
+          <p className="font-display text-3xl font-bold text-primary mb-6">
             {formatTime(elapsedTime)}
           </p>
+          <div className="mb-8 p-4 rounded-lg bg-muted">
+            <p className="text-sm text-muted-foreground font-body mb-2">Passphrase:</p>
+            <p className="font-mono text-lg font-semibold text-foreground tracking-wider">
+              HowIsItAprilAlready401
+            </p>
+          </div>
           <motion.button
             onClick={resetGame}
             whileHover={{ scale: 1.05 }}

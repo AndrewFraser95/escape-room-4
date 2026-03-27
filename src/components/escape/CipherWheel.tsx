@@ -52,6 +52,13 @@ const CipherWheel: React.FC = () => {
     "bg-spring-sage", "bg-spring-honey", "bg-spring-coral",
   ];
 
+  // Text color based on background for accessibility
+  const getTextColor = (ringIndex: number) => {
+    // Sage (green) backgrounds at indices 0 and 3 need white text
+    if (ringIndex === 0 || ringIndex === 3) return "text-white";
+    return "text-foreground";
+  };
+
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="text-center max-w-md">
@@ -75,7 +82,7 @@ const CipherWheel: React.FC = () => {
                 ▲
               </button>
               <div className={`w-14 h-14 rounded-lg flex items-center justify-center text-2xl font-display font-bold ${
-                solved ? "bg-primary text-primary-foreground" : ringColors[i] + " text-foreground"
+                solved ? "bg-primary text-primary-foreground" : ringColors[i] + " " + getTextColor(i)
               } transition-all duration-300 shadow-md`}>
                 {RING_LETTERS[i][rot]}
               </div>
