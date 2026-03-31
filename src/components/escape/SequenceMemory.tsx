@@ -3,7 +3,7 @@ import { useGame } from "./GameContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 const EGGS = [
-  { id: 0, emoji: "�", label: "Cherry", color: "bg-spring-coral" },
+  { id: 0, emoji: "🌸", label: "Cherry", color: "bg-spring-coral" },
   { id: 1, emoji: "🐣", label: "Chick", color: "bg-spring-honey" },
   { id: 2, emoji: "🐝", label: "Bee", color: "bg-spring-sage" },
   { id: 3, emoji: "🦋", label: "Butterfly", color: "bg-spring-mint" },

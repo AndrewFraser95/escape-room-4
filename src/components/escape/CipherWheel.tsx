@@ -104,7 +104,7 @@ const CipherWheel: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-primary font-display text-xl font-semibold"
         >
-          � The cipher unlocks: TRICKY!
+          The cipher unlocks: TRICKY!
         </motion.div>
       )}
     </div>

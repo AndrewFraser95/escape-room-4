@@ -102,8 +102,7 @@ const PatternConnect: React.FC = () => {
           The Dotted Path
         </h2>
         <p className="text-muted-foreground font-body">
-          Connect the dots to trace a classic arcade icon. Watch out for Blinky, Pinky, Inky, and Clyde! 
-          Click dots to draw, then click your starting dot to close the shape.
+          I have a mouth but cannot speak, and a hunger that never ends. I consume dots, flee from ghosts, and turn the tables to eat my enemies.
         </p>
       </div>
 
