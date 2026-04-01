@@ -26,6 +26,19 @@ const GameInner: React.FC = () => {
     return () => clearInterval(interval);
   }, [startTime, gameComplete]);
 
+  const handleBeginHunt = () => {
+    const now = new Date();
+    const isBeforeMidday = now.getHours() < 12;
+    
+    if (isBeforeMidday) {
+      // Rick roll redirect (before midday on April 1st)
+      window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+    } else {
+      // Normal game start (after midday)
+      startGame();
+    }
+  };
+
   // Landing screen
   if (currentChallenge === -1 && !gameComplete) {
     return (
@@ -45,7 +58,7 @@ const GameInner: React.FC = () => {
             Solve each puzzle to unlock the vault before time runs out.
           </p>
           <motion.button
-            onClick={startGame}
+            onClick={handleBeginHunt}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-body font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity"
